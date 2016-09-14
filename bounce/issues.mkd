@@ -8,6 +8,8 @@
 - **[6]** Add explosion sound
 - **[7]** Use a proper Slick StateBasedGame.
 - **[8]** Use fully specified resource path, preload resources if possible
+- **[15]** A customized splash screen with your name.
+
 
 ## Open Issues ##
 9.
@@ -30,9 +32,6 @@ each time the ball goes past the bottom of the screen (perhaps in other situatio
 
 14.
 When no lives are left, the game should display a "Game Over" message
-
-15.
-A customized splash screen with your name.
 
 16.
 Cheat  codes  that  allow  me  to  easily  see/access  all  of  your  levels  and  features  with  a  single  key
