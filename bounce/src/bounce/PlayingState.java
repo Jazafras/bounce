@@ -40,6 +40,9 @@ class PlayingState extends BasicGameState {
 		bounces = 0;
 		level = 1;
 		container.setSoundOn(true);
+		BounceGame bg = (BounceGame)game;
+		//bg.greenBrick.clear();
+		bg.ball.setVelocity(new Vector(.1f, .2f));
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
@@ -53,6 +56,7 @@ class PlayingState extends BasicGameState {
 		g.drawString("Level: " + level, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
+
 		if (level == 1){
 			for (greenBrick b : bg.greenBrick){
 				b.render(g);
@@ -79,6 +83,7 @@ class PlayingState extends BasicGameState {
 		Input input = container.getInput();
 		BounceGame bg = (BounceGame)game;
 		ArrayList<greenBrick> destroy = new ArrayList<greenBrick>();
+		
 		/***Cheat Codes***/
 		if (input.isKeyDown(Input.KEY_1)) {
 			level = 1;
@@ -93,6 +98,7 @@ class PlayingState extends BasicGameState {
 			for (int i = 1; i <= 4; i++) {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
 			}
+			bg.ball.setVelocity(new Vector(.1f, .2f));
 		}
 		
 		if (input.isKeyDown(Input.KEY_2)) {
@@ -109,7 +115,7 @@ class PlayingState extends BasicGameState {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 100));
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
 			}
-			bg.ball.setVelocity(bg.ball.getVelocity().scale(1.5f));
+			bg.ball.setVelocity(new Vector(.2f, .3f));
 		}
 		
 		if (input.isKeyDown(Input.KEY_3)) {
@@ -127,7 +133,8 @@ class PlayingState extends BasicGameState {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 350));
 			}
-			bg.ball.setVelocity(bg.ball.getVelocity().scale(1.2f));
+			bg.ball.setVelocity(new Vector(.3f, .4f));
+			
 		}
 		
 		if (input.isKeyDown(Input.KEY_4)) {
@@ -249,9 +256,6 @@ class PlayingState extends BasicGameState {
 		}
 		
 		if (lives == 0 || level == 4) {
-			if (level == 4){
-				level = 3;
-			}
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserLevel(level);
 			game.enterState(BounceGame.GAMEOVERSTATE);

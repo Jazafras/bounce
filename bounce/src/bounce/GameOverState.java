@@ -1,5 +1,6 @@
 package bounce;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import jig.ResourceManager;
@@ -52,9 +53,6 @@ class GameOverState extends BasicGameState {
 			Graphics g) throws SlickException {
 
 		BounceGame bg = (BounceGame)game;
-		g.drawString("Bounces: " + lastKnownBounces, 10, 30);
-		g.drawString("Lives: " + 0, 10, 50);
-		g.drawString("Level: " + lastKnownLevel, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.GAMEOVER_BANNER_RSC), 225,

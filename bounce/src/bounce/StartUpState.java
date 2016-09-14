@@ -41,9 +41,6 @@ class StartUpState extends BasicGameState {
 		
 		bg.ball.render(g);
 		bg.paddle.render(g);
-		g.drawString("Bounces: ?", 10, 30);
-		g.drawString("Lives: " + 3, 10, 50);
-		g.drawString("Level: " + 1, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.STARTUP_BANNER_RSC),
