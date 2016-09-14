@@ -25,6 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
 class PlayingState extends BasicGameState {
 	int bounces;
 	int explosions;
+	//int level;
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -44,6 +45,7 @@ class PlayingState extends BasicGameState {
 		bg.paddle.render(g);
 		g.drawString("Bounces: " + bounces, 10, 30);
 		g.drawString("Lives: " + (5 - explosions), 10, 50);
+		g.drawString("Level: " + 1, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
 	}
