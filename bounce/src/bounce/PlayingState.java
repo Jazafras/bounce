@@ -16,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * This state is active when the Game is being played. In this state, sound is
  * turned on, the bounce counter begins at 0 and increases until 10 at which
  * point a transition to the Game Over state is initiated. The user can also
- * control the ball using the WAS & D keys.
+ * control the paddle using the WAS & D keys.
  * 
  * Transitions From StartUpState
  * 
@@ -24,7 +24,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 class PlayingState extends BasicGameState {
 	int bounces;
-	
+	int explosions;
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -43,6 +43,7 @@ class PlayingState extends BasicGameState {
 		bg.ball.render(g);
 		bg.paddle.render(g);
 		g.drawString("Bounces: " + bounces, 10, 30);
+		g.drawString("Lives: " + (5 - explosions), 10, 50);
 		for (Bang b : bg.explosions)
 			b.render(g);
 	}
@@ -63,25 +64,46 @@ class PlayingState extends BasicGameState {
 		if (input.isKeyDown(Input.KEY_D)) {
 			bg.paddle.setVelocity(bg.paddle.getVelocity().add(new Vector(+.01f, 0f)));
 		}
+		
 		// bounce the ball...
 		boolean bounced = false;
-		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth
-				|| bg.ball.getCoarseGrainedMinX() < 0) {
-			//manually set
-			bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
-			bg.ball.setCoarseGrainedMinX(0);
+		boolean explode = false;
+		
+		//right wall
+		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
 			bg.ball.bounce(90);
 			bounced = true;
-		} else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight
-				|| bg.ball.getCoarseGrainedMinY() < 0) {
-			bg.ball.setCoarseGrainedMaxY(bg.ScreenHeight);
-			bg.ball.setCoarseGrainedMinY(0);
+		}
+		
+		//left wall
+		else if (bg.ball.getCoarseGrainedMinX() < 0) {
+			//manually set
+			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
+			//bg.ball.setCoarseGrainedMinX(0);
+			bg.ball.bounce(90);
+			bounced = true;
+		} 
+		
+		//bottom wall
+		else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight){
+			bg.ball.bounce(0);
+			bounced = true;
+			explode = true;
+		}
+		
+		//top wall
+		else if (bg.ball.getCoarseGrainedMinY() < 0) {
+			//bg.ball.setCoarseGrainedMaxY(bg.ScreenHeight);
+			//bg.ball.setCoarseGrainedMinY(0);
 			bg.ball.bounce(0);
 			bounced = true;
 		}
 		if (bounced) {
-			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));
 			bounces++;
+		}
+		if (explode){
+			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));
+			explosions++;
 		}
 		bg.ball.update(delta);
 		bg.paddle.update(delta);
@@ -93,7 +115,7 @@ class PlayingState extends BasicGameState {
 			}
 		}
 
-		if (bounces >= 10) {
+		if (explosions >= 5) {
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
 			game.enterState(BounceGame.GAMEOVERSTATE);
 		}
