@@ -25,7 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
 class PlayingState extends BasicGameState {
 	int bounces;
 	int explosions;
-	//int level;
+	int level;
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -33,7 +33,9 @@ class PlayingState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
+		explosions = 0;
 		bounces = 0;
+		level = 1;
 		container.setSoundOn(true);
 	}
 	@Override
@@ -45,7 +47,7 @@ class PlayingState extends BasicGameState {
 		bg.paddle.render(g);
 		g.drawString("Bounces: " + bounces, 10, 30);
 		g.drawString("Lives: " + (5 - explosions), 10, 50);
-		g.drawString("Level: " + 1, 10, 70);
+		g.drawString("Level: " + level, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
 	}
@@ -57,6 +59,19 @@ class PlayingState extends BasicGameState {
 		Input input = container.getInput();
 		BounceGame bg = (BounceGame)game;
 		
+		/***Cheat Codes***/
+		if (input.isKeyDown(Input.KEY_1)) {
+			level = 1;
+		}
+		
+		if (input.isKeyDown(Input.KEY_2)) {
+			level = 2;
+		}
+		
+		if (input.isKeyDown(Input.KEY_3)) {
+			level = 3;
+		}
+		
 		//move paddle right
 		if (input.isKeyDown(Input.KEY_A)) {
 			bg.paddle.setVelocity(bg.paddle.getVelocity().add(new Vector(-.01f, 0)));
@@ -66,6 +81,18 @@ class PlayingState extends BasicGameState {
 		if (input.isKeyDown(Input.KEY_D)) {
 			bg.paddle.setVelocity(bg.paddle.getVelocity().add(new Vector(+.01f, 0f)));
 		}
+		
+		//right wall
+		if (bg.paddle.getCoarseGrainedMaxX() > bg.ScreenWidth){
+			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
+			bg.paddle.bounce(180);
+		}
+		
+		//left wall
+		else if (bg.paddle.getCoarseGrainedMinX() < 0) {
+			//bg.ball.setCoarseGrainedMinX(0);
+			bg.paddle.bounce(180);
+		} 
 		
 		// bounce the ball...
 		boolean bounced = false;

@@ -31,7 +31,20 @@ import jig.Vector;
 		return velocity;
 	}
 
-
+	/**
+	 * Bounce the ball off a surface. This simple implementation, combined
+	 * with the test used when calling this method can cause "issues" in
+	 * some situations. Can you see where/when? If so, it should be easy to
+	 * fix!
+	 * 
+	 * @param surfaceTangent
+	 */
+	public void bounce(float surfaceTangent) {
+		countdown = 500;
+		velocity = velocity.bounce(surfaceTangent);
+	}
+	
+	
 	/**
 	 * Update the Ball based on how much time has passed...
 	 * 
