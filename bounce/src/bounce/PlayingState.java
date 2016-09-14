@@ -85,18 +85,23 @@ class PlayingState extends BasicGameState {
 		//right wall
 		if (bg.paddle.getCoarseGrainedMaxX() > bg.ScreenWidth){
 			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
-			bg.paddle.bounce(180);
+			bg.paddle.bounce(0);
 		}
 		
 		//left wall
 		else if (bg.paddle.getCoarseGrainedMinX() < 0) {
 			//bg.ball.setCoarseGrainedMinX(0);
-			bg.paddle.bounce(180);
+			bg.paddle.bounce(0);
 		} 
 		
 		// bounce the ball...
 		boolean bounced = false;
 		boolean explode = false;
+		
+		//bounce off paddle
+		if (bg.ball.collides(bg.paddle) != null) {
+			bg.ball.bounce(0);
+		} 
 		
 		//right wall
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){

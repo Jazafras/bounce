@@ -62,6 +62,11 @@ class StartUpState extends BasicGameState {
 		// bounce the ball...
 		boolean explode = false;
 		
+		//bounce off paddle
+		if (bg.ball.collides(bg.paddle) != null) {
+			bg.ball.bounce(0);
+		} 
+		
 		//right wall
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
 			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
