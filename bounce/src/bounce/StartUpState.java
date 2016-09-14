@@ -60,20 +60,37 @@ class StartUpState extends BasicGameState {
 			bg.enterState(BounceGame.PLAYINGSTATE);	
 		
 		// bounce the ball...
-		boolean bounced = false;
-		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth
-				|| bg.ball.getCoarseGrainedMinX() < 0) {
+		boolean explode = false;
+		
+		//right wall
+		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
+			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
 			bg.ball.bounce(90);
-			bounced = true;
-		} else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight
-				|| bg.ball.getCoarseGrainedMinY() < 0) {
-			bg.ball.bounce(0);
-			bounced = true;
 		}
-		if (bounced) {
+		
+		//left wall
+		else if (bg.ball.getCoarseGrainedMinX() < 0) {
+			//bg.ball.setCoarseGrainedMinX(0);
+			bg.ball.bounce(90);
+		} 
+		
+		//bottom wall
+		else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight){
+			bg.ball.bounce(0);
+			explode = true;
+		}
+		
+		//top wall
+		else if (bg.ball.getCoarseGrainedMinY() < 0) {
+			bg.ball.bounce(0);
+		}
+		
+		if (explode){
 			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));
 		}
+		
 		bg.ball.update(delta);
+		bg.paddle.update(delta);
 
 		// check if there are any finished explosions, if so remove them
 		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
@@ -81,6 +98,7 @@ class StartUpState extends BasicGameState {
 				i.remove();
 			}
 		}
+		
 
 	}
 

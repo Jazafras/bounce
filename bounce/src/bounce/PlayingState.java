@@ -71,14 +71,13 @@ class PlayingState extends BasicGameState {
 		
 		//right wall
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
+			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
 			bg.ball.bounce(90);
 			bounced = true;
 		}
 		
 		//left wall
 		else if (bg.ball.getCoarseGrainedMinX() < 0) {
-			//manually set
-			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
 			//bg.ball.setCoarseGrainedMinX(0);
 			bg.ball.bounce(90);
 			bounced = true;
@@ -93,8 +92,6 @@ class PlayingState extends BasicGameState {
 		
 		//top wall
 		else if (bg.ball.getCoarseGrainedMinY() < 0) {
-			//bg.ball.setCoarseGrainedMaxY(bg.ScreenHeight);
-			//bg.ball.setCoarseGrainedMinY(0);
 			bg.ball.bounce(0);
 			bounced = true;
 		}
