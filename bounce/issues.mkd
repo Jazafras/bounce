@@ -8,6 +8,7 @@
 - **[6]** Add explosion sound
 - **[7]** Use a proper Slick StateBasedGame.
 - **[8]** Use fully specified resource path, preload resources if possible
+- **[14]** When no lives are left, the game should display a "Game Over" message
 - **[15]** A customized splash screen with your name.
 
 
@@ -29,9 +30,6 @@ Corrected collision response for the ball, so it doesn't get caught in the walls
 13.
 A "Lives Remaining" indicator that shows the player initially has three lives. These should decrease
 each time the ball goes past the bottom of the screen (perhaps in other situations too?).
-
-14.
-When no lives are left, the game should display a "Game Over" message
 
 16.
 Cheat  codes  that  allow  me  to  easily  see/access  all  of  your  levels  and  features  with  a  single  key
