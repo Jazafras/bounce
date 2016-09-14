@@ -8,14 +8,12 @@
 - **[6]** Add explosion sound
 - **[7]** Use a proper Slick StateBasedGame.
 - **[8]** Use fully specified resource path, preload resources if possible
+- **[9]** A paddle that can be controlled by the user that influences the path of the ball.
 - **[14]** When no lives are left, the game should display a "Game Over" message
 - **[15]** A customized splash screen with your name.
 
 
 ## Open Issues ##
-9.
-A paddle that can be controlled by the user that influences the path of the ball.
-
 10.
 Bricks that are placed in some configuration near the top of the screen and are "destroyed" when hit
 (or when hit twice...you decide).

@@ -27,6 +27,7 @@ class GameOverState extends BasicGameState {
 
 	private int timer;
 	private int lastKnownBounces; // the user's score, to be displayed, but not updated.
+	private int lastKnownLevel; // the user's level right before they died
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -42,6 +43,10 @@ class GameOverState extends BasicGameState {
 		lastKnownBounces = bounces;
 	}
 	
+	public void setUserLevel(int level) {
+		lastKnownLevel = level;
+	}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
 			Graphics g) throws SlickException {
@@ -49,6 +54,7 @@ class GameOverState extends BasicGameState {
 		BounceGame bg = (BounceGame)game;
 		g.drawString("Bounces: " + lastKnownBounces, 10, 30);
 		g.drawString("Lives: " + 0, 10, 50);
+		g.drawString("Level: " + lastKnownLevel, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.GAMEOVER_BANNER_RSC), 225,
