@@ -67,10 +67,15 @@ class PlayingState extends BasicGameState {
 		boolean bounced = false;
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth
 				|| bg.ball.getCoarseGrainedMinX() < 0) {
+			//manually set
+			bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
+			bg.ball.setCoarseGrainedMinX(0);
 			bg.ball.bounce(90);
 			bounced = true;
 		} else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight
 				|| bg.ball.getCoarseGrainedMinY() < 0) {
+			bg.ball.setCoarseGrainedMaxY(bg.ScreenHeight);
+			bg.ball.setCoarseGrainedMinY(0);
 			bg.ball.bounce(0);
 			bounced = true;
 		}
