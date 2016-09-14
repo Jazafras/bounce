@@ -49,6 +49,9 @@ public class BounceGame extends StateBasedGame {
 	public static final String BALL_BALLIMG_RSC = "bounce/resource/ball.png";
 	public static final String BALL_BROKENIMG_RSC = "bounce/resource/brokenball.png";
 	public static final String PADDLEIMG_RSC = "bounce/resource/paddle.png";
+	public static final String BRICK_GREENIMG_RSC = "bounce/resource/greenBrick.png";
+	public static final String BRICK_BLUEIMG_RSC = "bounce/resource/blueBrick.png";
+	public static final String BRICK_REDIMG_RSC = "bounce/resource/redBrick.png";
 	public static final String GAMEOVER_BANNER_RSC = "bounce/resource/gameover.png";
 	public static final String STARTUP_BANNER_RSC = "bounce/resource/PressSpace.png";
 	public static final String BANG_EXPLOSIONIMG_RSC = "bounce/resource/explosion.png";
@@ -57,9 +60,11 @@ public class BounceGame extends StateBasedGame {
 	public final int ScreenWidth;
 	public final int ScreenHeight;
 
+	int level;
 	Ball ball;
 	Paddle paddle;
 	ArrayList<Bang> explosions;
+	ArrayList<greenBrick> greenBrick;
 
 	/**
 	 * Create the BounceGame frame, saving the width and height for later use.
@@ -99,13 +104,22 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(BALL_BALLIMG_RSC);
 		ResourceManager.loadImage(BALL_BROKENIMG_RSC);
 		ResourceManager.loadImage(PADDLEIMG_RSC);
+		ResourceManager.loadImage(BRICK_GREENIMG_RSC);
+		ResourceManager.loadImage(BRICK_BLUEIMG_RSC);
+		ResourceManager.loadImage(BRICK_REDIMG_RSC);
 		ResourceManager.loadImage(GAMEOVER_BANNER_RSC);
 		ResourceManager.loadImage(STARTUP_BANNER_RSC);
 		ResourceManager.loadImage(BANG_EXPLOSIONIMG_RSC);
 		
+		level = 1;
 		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
 		paddle = new Paddle(ScreenWidth / 2, ScreenHeight - 10, 0.0f, 0.0f);
-
+		greenBrick = new ArrayList<greenBrick>();
+		if (level == 1){
+			for (int i = 1; i <= 4; i++) {
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 200));
+			}
+		}
 	}
 	
 	public static void main(String[] args) {

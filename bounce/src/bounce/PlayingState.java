@@ -1,5 +1,6 @@
 package bounce;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import jig.Vector;
@@ -52,6 +53,11 @@ class PlayingState extends BasicGameState {
 		g.drawString("Level: " + level, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
+		if (level == 1){
+			for (greenBrick b : bg.greenBrick){
+				b.render(g);
+			}
+		}
 	}
 
 	@Override
@@ -78,8 +84,7 @@ class PlayingState extends BasicGameState {
 			lives = 400;
 		}
 		
-		/****************/
-		
+		/***control the paddle****/
 		//move paddle right
 		if (input.isKeyDown(Input.KEY_A)) {
 			bg.paddle.setVelocity(bg.paddle.getVelocity().add(new Vector(-.01f, 0)));
@@ -102,14 +107,30 @@ class PlayingState extends BasicGameState {
 			bg.paddle.bounce(0);
 		} 
 		
-		// bounce the ball...
+		/***bounce the ball***/
 		boolean bounced = false;
 		boolean explode = false;
 		
 		//bounce off paddle
 		if (bg.ball.collides(bg.paddle) != null) {
 			bg.ball.bounce(0);
+		}
+		
+		//brick collisions
+		ArrayList<greenBrick> destroy = new ArrayList<greenBrick>();
+		
+		//bounce off and destroy a green brick
+		for (greenBrick b : bg.greenBrick){
+			if (bg.ball.collides(b) != null) {
+				bg.ball.bounce(0);
+				bounced = true;
+				destroy.add(b);
+			}
 		} 
+		
+		for (greenBrick b : destroy){
+			bg.greenBrick.remove(b);
+		}
 		
 		//right wall
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
