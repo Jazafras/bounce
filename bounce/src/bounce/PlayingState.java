@@ -58,6 +58,18 @@ class PlayingState extends BasicGameState {
 				b.render(g);
 			}
 		}
+		
+		if (level == 2){
+			for (greenBrick b : bg.greenBrick){
+				b.render(g);
+			}
+		}
+		
+		if (level == 3){
+			for (greenBrick b : bg.greenBrick){
+				b.render(g);
+			}
+		}
 	}
 
 	@Override
@@ -66,22 +78,60 @@ class PlayingState extends BasicGameState {
 
 		Input input = container.getInput();
 		BounceGame bg = (BounceGame)game;
-		
+		ArrayList<greenBrick> destroy = new ArrayList<greenBrick>();
 		/***Cheat Codes***/
 		if (input.isKeyDown(Input.KEY_1)) {
 			level = 1;
+			//destroy current bricks
+			for (greenBrick b : bg.greenBrick){
+					destroy.add(b);
+			}
+			for (greenBrick b : destroy){
+				bg.greenBrick.remove(b);
+			}
+			//generate level 1 bricks
+			for (int i = 1; i <= 4; i++) {
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+			}
 		}
 		
 		if (input.isKeyDown(Input.KEY_2)) {
 			level = 2;
+			//destroy current bricks
+			for (greenBrick b : bg.greenBrick){
+					destroy.add(b);
+			}
+			for (greenBrick b : destroy){
+				bg.greenBrick.remove(b);
+			}
+			//generate level 2 bricks
+			for (int i = 1; i <= 4; i++) {
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 100));
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+			}
+			bg.ball.setVelocity(bg.ball.getVelocity().scale(1.5f));
 		}
 		
 		if (input.isKeyDown(Input.KEY_3)) {
 			level = 3;
+			//destroy current bricks
+			for (greenBrick b : bg.greenBrick){
+					destroy.add(b);
+			}
+			for (greenBrick b : destroy){
+				bg.greenBrick.remove(b);
+			}
+			//generate level 3 bricks
+			for (int i = 1; i <= 4; i++) {
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 50));
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 350));
+			}
+			bg.ball.setVelocity(bg.ball.getVelocity().scale(1.2f));
 		}
 		
 		if (input.isKeyDown(Input.KEY_4)) {
-			lives = 400;
+			lives += 400;
 		}
 		
 		/***control the paddle****/
@@ -117,7 +167,6 @@ class PlayingState extends BasicGameState {
 		}
 		
 		//brick collisions
-		ArrayList<greenBrick> destroy = new ArrayList<greenBrick>();
 		
 		//bounce off and destroy a green brick
 		for (greenBrick b : bg.greenBrick){
@@ -136,14 +185,12 @@ class PlayingState extends BasicGameState {
 		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
 			bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
 			bg.ball.bounce(90);
-			bounced = true;
 		}
 		
 		//left wall
 		else if (bg.ball.getCoarseGrainedMinX() < 0) {
 			bg.ball.setCoarseGrainedMinX(0);
 			bg.ball.bounce(90);
-			bounced = true;
 		} 
 		
 		//bottom wall
@@ -158,9 +205,9 @@ class PlayingState extends BasicGameState {
 		else if (bg.ball.getCoarseGrainedMinY() < 0) {
 			bg.ball.setCoarseGrainedMinY(0);
 			bg.ball.bounce(0);
-			bounced = true;
 		}
 		if (bounced) {
+			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));
 			bounces++;
 		}
 		if (explode){
@@ -178,7 +225,33 @@ class PlayingState extends BasicGameState {
 			}
 		}
 
-		if (lives == 0) {
+		
+		//increment levels
+		if (bg.greenBrick.size() == 0){
+			if (level < 4){
+				level++;
+			}
+			if (level == 2){
+				for (int i = 1; i <= 4; i++) {
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 100));
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+				}
+				bg.ball.setVelocity(bg.ball.getVelocity().scale(1.5f));
+			}
+			else if (level == 3) {
+				for (int i = 1; i <= 4; i++) {
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 50));
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 350));
+				}
+				bg.ball.setVelocity(bg.ball.getVelocity().scale(1.2f));
+			}
+		}
+		
+		if (lives == 0 || level == 4) {
+			if (level == 4){
+				level = 3;
+			}
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserLevel(level);
 			game.enterState(BounceGame.GAMEOVERSTATE);

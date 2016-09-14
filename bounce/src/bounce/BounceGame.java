@@ -120,6 +120,19 @@ public class BounceGame extends StateBasedGame {
 				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 200));
 			}
 		}
+		else if (level == 2){
+			for (int i = 1; i <= 4; i++) {
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 100));
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 200));
+			}
+		}
+		else if (level == 3){
+			for (int i = 1; i <= 4; i++) {
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 50));
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 200));
+				greenBrick.add(new greenBrick(i * (ScreenWidth / 5), 350));
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
