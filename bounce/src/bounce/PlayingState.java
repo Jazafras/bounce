@@ -35,20 +35,18 @@ class PlayingState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
+		//bg.ball.setVelocity(new Vector(.1f, .2f));
 		lives = 3;
 		explosions = 0;
 		bounces = 0;
-		level = 1;
 		container.setSoundOn(true);
-		BounceGame bg = (BounceGame)game;
-		//bg.greenBrick.clear();
-		bg.ball.setVelocity(new Vector(.1f, .2f));
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
-			Graphics g) throws SlickException {
-		BounceGame bg = (BounceGame)game;
 		
+		Graphics g) throws SlickException {
+		BounceGame bg = (BounceGame)game;
+		//bg.greenBrick.clear();
 		bg.ball.render(g);
 		bg.paddle.render(g);
 		g.drawString("Bounces: " + bounces, 10, 30);
@@ -56,23 +54,8 @@ class PlayingState extends BasicGameState {
 		g.drawString("Level: " + level, 10, 70);
 		for (Bang b : bg.explosions)
 			b.render(g);
-
-		if (level == 1){
-			for (greenBrick b : bg.greenBrick){
-				b.render(g);
-			}
-		}
-		
-		if (level == 2){
-			for (greenBrick b : bg.greenBrick){
-				b.render(g);
-			}
-		}
-		
-		if (level == 3){
-			for (greenBrick b : bg.greenBrick){
-				b.render(g);
-			}
+		for (greenBrick b : bg.greenBrick){
+			b.render(g);
 		}
 	}
 
@@ -94,6 +77,8 @@ class PlayingState extends BasicGameState {
 			for (greenBrick b : destroy){
 				bg.greenBrick.remove(b);
 			}
+			//reset ball position
+			bg.ball.setPosition(bg.ScreenWidth / 2, bg.ScreenHeight / 2);
 			//generate level 1 bricks
 			for (int i = 1; i <= 4; i++) {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
@@ -110,6 +95,8 @@ class PlayingState extends BasicGameState {
 			for (greenBrick b : destroy){
 				bg.greenBrick.remove(b);
 			}
+			//reset ball position
+			bg.ball.setPosition(bg.ScreenWidth / 2, bg.ScreenHeight / 2);
 			//generate level 2 bricks
 			for (int i = 1; i <= 4; i++) {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 100));
@@ -127,6 +114,8 @@ class PlayingState extends BasicGameState {
 			for (greenBrick b : destroy){
 				bg.greenBrick.remove(b);
 			}
+			//reset ball position
+			bg.ball.setPosition(bg.ScreenWidth / 2, bg.ScreenHeight / 2);
 			//generate level 3 bricks
 			for (int i = 1; i <= 4; i++) {
 				bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 50));
@@ -258,6 +247,20 @@ class PlayingState extends BasicGameState {
 		if (lives == 0 || level == 4) {
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserLevel(level);
+			//reset ball position
+			bg.ball.setPosition(bg.ScreenWidth / 2, bg.ScreenHeight / 2);
+			//reset paddle position
+			bg.paddle.setPosition(bg.ScreenWidth / 2, bg.ScreenHeight - 10);
+			//reset paddle velocity
+			bg.paddle.setVelocity(new Vector(0f, 0f));
+			if (level == 4){
+				level = 1;
+				//generate level 1 bricks
+				for (int i = 1; i <= 4; i++) {
+					bg.greenBrick.add(new greenBrick(i * (bg.ScreenWidth / 5), 200));
+				}
+				bg.ball.setVelocity(new Vector(.1f, .2f));
+			}
 			game.enterState(BounceGame.GAMEOVERSTATE);
 		}
 	}
