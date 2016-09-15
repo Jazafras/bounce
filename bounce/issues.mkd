@@ -16,6 +16,6 @@
 		   that decrements when the ball collides with the bottom
 - **[14]** When no lives are left, the game should display a "Game Over" message
 - **[15]** A customized splash screen with your name.
-- **[15]** Cheat  codes that can switch between levels and add lives
+- **[16]** Cheat  codes that can switch between levels and add lives
 
 
