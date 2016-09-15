@@ -22,7 +22,9 @@ import org.newdawn.slick.state.StateBasedGame;
  * Transitions To PlayingState
  */
 class StartUpState extends BasicGameState {
-
+	int paddleCol;
+	int xTime;
+	int yTime;
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -31,6 +33,9 @@ class StartUpState extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		container.setSoundOn(false);
+		paddleCol=0;
+		xTime=0;
+		yTime=0;
 	}
 
 
@@ -61,32 +66,43 @@ class StartUpState extends BasicGameState {
 		boolean explode = false;
 		
 		//bounce off paddle
-		if (bg.ball.collides(bg.paddle) != null) {
+		if (bg.ball.collides(bg.paddle) != null && paddleCol <= 0) {
 			bg.ball.bounce(0);
-		} 
+			paddleCol = 10;
+		}
+		paddleCol--;
 		
 		//right wall
-		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth){
-			//bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
+		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth && xTime <= 0){
+			xTime = 10;
+			bg.ball.setCoarseGrainedMaxX(bg.ScreenWidth);
 			bg.ball.bounce(90);
 		}
 		
 		//left wall
-		else if (bg.ball.getCoarseGrainedMinX() < 0) {
-			//bg.ball.setCoarseGrainedMinX(0);
+		else if (bg.ball.getCoarseGrainedMinX() < 0 && xTime <= 0) {
+			xTime = 10;
+			bg.ball.setCoarseGrainedMinX(0);
 			bg.ball.bounce(90);
 		} 
 		
 		//bottom wall
-		else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight){
+		else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight && yTime <= 0){
+			//bg.ball.setCoarseGrainedMaxY(bg.ScreenHeight);
+			yTime = 10;
 			bg.ball.bounce(0);
+			
 			explode = true;
 		}
 		
 		//top wall
-		else if (bg.ball.getCoarseGrainedMinY() < 0) {
+		else if (bg.ball.getCoarseGrainedMinY() < 0 && yTime <= 0) {
+			yTime = 10;
+			bg.ball.setCoarseGrainedMinY(0);
 			bg.ball.bounce(0);
 		}
+		xTime--;
+		yTime--;
 		
 		if (explode){
 			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));

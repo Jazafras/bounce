@@ -33,8 +33,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * Graphics resources courtesy of qubodup:
  * http://opengameart.org/content/bomb-explosion-animation
  * 
- * Sound resources courtesy of DJ Chronos:
- * http://www.freesound.org/people/DJ%20Chronos/sounds/123236/
+ * Sound resources courtesy of Star Wars
  * 
  * 
  * @author wallaces

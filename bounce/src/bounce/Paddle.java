@@ -5,8 +5,8 @@ import jig.ResourceManager;
 import jig.Vector;
 
 /**
- * The Ball class is an Entity that has a velocity (since it's moving). When
- * the Ball bounces off a surface, it temporarily displays a image with
+ * The Paddle class is an Entity that has a velocity (since it's moving). When
+ * the Ball bounces off its surface, it temporarily displays a image with
  * cracks for a nice visual effect.
  * 
  */
@@ -31,14 +31,7 @@ import jig.Vector;
 		return velocity;
 	}
 
-	/**
-	 * Bounce the ball off a surface. This simple implementation, combined
-	 * with the test used when calling this method can cause "issues" in
-	 * some situations. Can you see where/when? If so, it should be easy to
-	 * fix!
-	 * 
-	 * @param surfaceTangent
-	 */
+
 	public void bounce(float surfaceTangent) {
 		countdown = 500;
 		velocity = velocity.bounce(surfaceTangent);

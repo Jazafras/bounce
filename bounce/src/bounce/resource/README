@@ -1,0 +1,25 @@
+Jasmine Emerson
+jasmine.emerson@wsu.edu
+
+In this project, I took the base skeleton of Bounce
+provided by Professor Wallace and added the following
+features to the game:
+
+1. A paddle that can be moved by the user using the 
+'A' and 'D' keys. It can bounce the ball and prevent
+it from colliding with the floor.
+
+2. Green bricks that the ball can collide with. They
+disappear upon collision.
+
+3. Three levels that the player can advance through.
+The number of bricks and the ball's speed increases
+with each level.
+
+4. Cheat codes that allow the player to skip levels.
+The '1' key skips to level 1, the '2' key skips to 
+level 2, and the '3' key skips to level 3. The '4'
+key can give the player extra lives.
+
+All graphics except the explosion were made by me in
+photoshop. Sounds were taken from Star Wars.

@@ -11,15 +11,11 @@
 - **[9]** A paddle that can be controlled by the user that influences the path of the ball.
 - **[10]** Bricks that are placed in some configuration near the top of the screen and are "destroyed" when hit
 - **[11]** A progression of at least three levels in which the game gets slightly more difficult.
+- **[12]** Corrected collision response for the ball, so it doesn't get caught in the walls or in bricks.
 - **[13]** A "Lives Remaining" indicator that shows the player initially has three lives 
 		   that decrements when the ball collides with the bottom
 - **[14]** When no lives are left, the game should display a "Game Over" message
 - **[15]** A customized splash screen with your name.
 - **[15]** Cheat  codes that can switch between levels and add lives
 
-
-## Open Issues ##
-
-12.
-Corrected collision response for the ball, so it doesn't get caught in the walls or in bricks.
 
